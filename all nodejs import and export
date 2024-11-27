@@ -1,0 +1,151 @@
+//1.fs import
+import fs from "fs";
+console.log("At the start.....");
+fs.writeFile("./data.txt","NodeJs is superfase and highly scalable",(err)=>{
+   err ? console.log(err) : console.log("Operation success....");
+});
+console.log("At the end....");
+//2. import fs
+import fs from "fs";
+fs.readFile("./data.txt",(err,data)=>{
+    err ? console.log(err) : console.log(data.toString());
+});
+
+//3..‎test-nodejs/testfs/fs3.js
+import fs from "fs";
+console.log("At the start...");
+try{
+  let data = fs.readFileSync("./dta.txt","utf8");
+  console.log(data);
+}
+catch(err){
+    console.log(err);
+}
+console.log("At the end....");
+//4. ‎test-nodejs/testfs/fs4.js
+import fs from "fs";
+try{
+ fs.writeFileSync("./abc.txt","adsflsdjf sflfsdfd fsdlfjdsf");
+ console.log("Operation success...");
+}
+catch(err){
+    console.log(err);
+}
+‎//5. test-nodejs/testfs/package.json
+{
+  "name": "testfs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+//6. ‎test-nodejs/testmodule/m1.js
+let x = 200;
+export let y = 100;
+export default x;
+‎//7. test-nodejs/testmodule/m2.js
+export let a = 100;
+export let b = 200;
+let c = 300;
+export default c;
+//8. ‎test-nodejs/testmodule/m3.js
+let a = 100;
+let b = 200;
+let c = 300;
+//export default {firstValue: a, secondValue: b, thirdValue: c};
+//export default {a: a, b: b, c: c};
+export default {a,b,c};
+//8. ‎test-nodejs/testmodule/m4.js
+const f1 = ()=>{
+    console.log("f1-executed....");
+}
+export default f1;
+//9. ‎test-nodejs/testmodule/m5.js
+export const m1 = ()=>{
+    console.log("GM....");
+}
+export const m2 = ()=>{
+    console.log("GE.....");
+}
+export const m3 = ()=>{
+    console.log("GN......");
+}
+// export default {m1,m2,m3};
+‎test-nodejs/testmodule/m6.js
+//10..
+function Message(){
+    this.m1 = ()=>{
+        console.log("GM....");
+    }
+    this.m2 = ()=>{
+        console.log("GE....");
+    }
+    this.m3 = ()=>{
+        console.log("GN.....");
+    }
+}
+export default new Message();
+// 11.‎test-nodejs/testmodule/package.json
+{
+  "name": "testmodule",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+‎test-nodejs/testmodule/t1.js
+////////////////////////
+import obj from "./m1.js";
+import {y} from "./m1.js";
+console.log(obj);
+console.log(y);
+‎test-nodejs/testmodule/t2.js
+////////////////////////////////////////
+import c,{a,b} from "./m2.js";
+console.log(a);
+console.log(b);
+console.log(c);
+‎test-nodejs/testmodule/t3.js
++6/////////////////////////////////////////////////////////////////////
+Original file line number	Original file line	Diff line number	Diff line change
+@@ -0,0 +1,6 @@
+import obj from "./m3.js";
+console.log(obj);
+console.log(obj.a);
+console.log(obj.b);
+console.log(obj.c);
+‎test-nodejs/testmodule/t4.js
++4/////////////////////////////////////////////////////////////////////////////////////
+Original file line number	Original file line	Diff line number	Diff line change
+@@ -0,0 +1,4 @@
+import f1 from "./m4.js";
+console.log(f1);
+f1();
+‎test-nodejs/testmodule/t5.js
++6/////////////////////////////////////////////////////////////////////////////////////////
+Original file line number	Original file line	Diff line number	Diff line change
+@@ -0,0 +1,6 @@
+m1();
+m2();
+m3();
+import {m1,m2,m3} from "./m5.js";
+i
+‎test-nodejs/testmodule/t6.js
++4//////////////////////////////////////////////////////////////////////////
+Original file line number	Original file line	Diff line number	Diff line change
+@@ -0,0 +1,4 @@
+import obj from "./m6.js";
+obj.m1();
+obj.m2();
+obj.m3();
+
