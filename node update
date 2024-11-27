@@ -1,0 +1,156 @@
++41
+Original file line number	Original file line	Diff line number	Diff line change
+@@ -0,0 +1,41 @@
+import http from "http";
+import url, { fileURLToPath } from "url";
+import fs from "fs";
+import path from "path";
+http.createServer((request,response)=>{
+  const parsedUrl = url.parse(request.url,true);
+  let __filename = fileURLToPath(import.meta.url);
+  let __dirname = path.dirname(__filename);
+  console.log(parsedUrl.pathname);
+  if((parsedUrl.pathname == "/" || parsedUrl.pathname=="/home") && request.method == "GET"){
+   try{ 
+    let homePagePath = path.join(__dirname,"views/home.html");
+    let data =  fs.readFileSync(homePagePath);
+    response.write(data);
+    response.end();
+   }
+   catch(err){
+    console.log(err);
+    response.end("Oops! something went wrong...");
+   }
+   
+  }
+  else if(parsedUrl.pathname.match("\.css$")){
+    let cssFilePath = path.join(__dirname,parsedUrl.pathname);
+    let readStream = fs.createReadStream(cssFilePath);
+    readStream.pipe(response);
+  }
+  else if(parsedUrl.pathname.match("\.jpeg$")){
+    let imgFilePath = path.join(__dirname,parsedUrl.pathname);
+    let readStream = fs.createReadStream(imgFilePath);
+    readStream.pipe(response);
+    
+  }
+}).listen(3000,()=>{console.log("server started")});
+‎test-nodejs/firstapp/package.json
++12
+
+
+Original file line number	Original file line	Diff line number	Diff line change
+@@ -0,0 +1,12 @@
+{
+  "name": "firstapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+‎test-nodejs/firstapp/views/freeze.jpeg
+7.1 KB
+
+
+Loading
+‎test-nodejs/firstapp/views/home.html
++42
+Original file line number	Original file line	Diff line number	Diff line change
+@@ -0,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Node App</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./views/style.css"/>
+  <link rel="stylesheet" href="./views/second.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="#">Logo</a>
+  
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">About us</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Contact us</a>
+    </li>
+  </ul>
+</nav>
+<div class="container mt-5">
+  <h1 style="color:red;">Home Page</h1>
+  <h2 class="heading-color">Welcome</h2>
+  <h2 class="heading-color-secondary">Hello World</h2>
+  <img src="./views/freeze.jpeg" width="200px" height="100px"/>
+</div>
+</body>
+</html>
+‎test-nodejs/firstapp/views/second.css
++3
+Original file line number	Original file line	Diff line number	Diff line change
+@@ -0,0 +1,3 @@
+.heading-color-secondary{
+    color: blue;
+}
+‎test-nodejs/firstapp/views/style.css
++3
+Original file line number	Original file line	Diff line number	Diff line change
+@@ -0,0 +1,3 @@
+.heading-color{
+    color: green;
+}
+‎test-nodejs/testhttp/abc.txt
++1
+Original file line number	Original file line	Diff line number	Diff line change
+@@ -0,0 +1 @@
+abc file data.
+‎test-nodejs/testhttp/server3.js
++17
+Original file line number	Original file line	Diff line number	Diff line change
+@@ -0,0 +1,17 @@
+import http from "http";
+import url from "url";
+http.createServer((request,response)=>{
+   const parsedUrl = url.parse(request.url,true); 
+   console.log(parsedUrl);
+   if(parsedUrl.pathname == "/add" && request.method == "GET"){
+     //let a = parsedUrl.query.a;
+     //let b = parsedUrl.query.b; 
+     let {a,b} = parsedUrl.query; //{a:20,b:10}
+     let result = a*1 + b *1;
+     response.write("Addition : "+result);
+     response.end();
+   }
+}).listen(3000,()=>{
+    console.log("Server Started....");
+});
+‎test-nodejs/testhttp/test.js
++6
+Original file line number	Original file line	Diff line number	Diff line change
+@@ -0,0 +1,6 @@
+import fs from "fs";
+const readStream = fs.createReadStream("abc.txt");
+const writeStream = fs.createWriteStream("xyz.txt");
+readStream.pipe(writeStream);
+console.log("succes...");
+‎test-nodejs/testhttp/xyz.txt
++1
+Original file line number	Original file line	Diff line number	Diff line change
+@@ -0,0 +1 @@
+abc file data.
